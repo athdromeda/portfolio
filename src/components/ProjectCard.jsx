@@ -1,23 +1,37 @@
 import { FiExternalLink } from 'react-icons/fi';
 import Tag from './Tag';
+import { useState } from 'react';
 
-function ProjectCard({ title, description, thumbnail, projectUrl }) {
+function ProjectCard({ title, description, thumbnailUrl, projectUrl, stack }) {
+  const [isHover, setIsHover] = useState(false);
   return (
-    <a className="text-left cursor-pointer transition-transform hover:-translate-y-2 hover:bottom-2 hover:shadow-lg">
-      <img src={thumbnail} alt="" />
-      <div className="bg-[#7329c6] flex flex-col py-4 px-5">
+    <div
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      className="h-80 my-16 md:my-6 md:mx-3 text-left cursor-pointer bg-white flex flex-col justify-between"
+    >
+      <div className="h-full">
+        <img src={thumbnailUrl} alt="" />
+      </div>
+      <div className="bg-[#7329c6] h-40 flex flex-col py-4 px-5">
         <h3 className="flex items-center justify-between">
           <b>{title}</b>
-          <a href={projectUrl}>
-            <FiExternalLink />
-          </a>
+          {isHover && (
+            <a href={projectUrl}>
+              <FiExternalLink />
+            </a>
+          )}
         </h3>
         <p className="text-sm">{description}</p>
-        <div className="mt-4">
-          <Tag name={'express'} />
-        </div>
+        {isHover && (
+          <div className="mt-4 flex flex-wrap gap-1">
+            {stack.map((item, id) => (
+              <Tag key={id} name={item} />
+            ))}
+          </div>
+        )}
       </div>
-    </a>
+    </div>
   );
 }
 

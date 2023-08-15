@@ -1,9 +1,17 @@
-import { SiExpress } from 'react-icons/si';
+import { SiExpress, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
+
+const tagIcon = [
+  {
+    express: <SiExpress />,
+    tailwind: <SiTailwindcss />,
+    next: <SiNextdotjs />,
+  },
+];
 
 function Tag({ name }) {
   return (
-    <div className="flex items-center gap-2 bg-white text-black w-fit px-2 rounded-md text-sm">
-      <SiExpress />
+    <div className="flex text-xs items-center gap-2 bg-white text-black w-fit px-2 py-1 rounded-md">
+      {tagIcon[name]}
       {name}
     </div>
   );

@@ -1,8 +1,12 @@
-import { SiJavascript, SiTailwindcss } from 'react-icons/si';
-import { FaReact, FaHtml5, FaCss3Alt } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import SkillsSvg from '../components/SkillsSvg';
+import { useEffect } from 'react';
 
 function Skills() {
+  const { ref, inView } = useInView({ triggerOnce: true });
+  const { scrollYProgress, scrollY } = useScroll();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <p>
@@ -10,19 +14,14 @@ function Skills() {
         <b className="text-red-500">HTML</b>, CSS, and a touch of JavaScript
         wizardry, I transform concepts into captivating interfaces.
       </p>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex text-4xl gap-4 mt-12"
-      >
-        <FaReact />
-        <FaHtml5 />
-        <FaCss3Alt />
-        <SiJavascript />
-        <SiTailwindcss />
-      </motion.div>
+      <SkillsSvg scrollYProgress={scrollYProgress} />
+      <div ref={ref} className="mt-24 max-w-4/5">
+        {inView && (
+          <motion.div style={{ scale: scrollYProgress }}>
+            {/* <img src="skills-clean.svg" alt="" /> */}
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }
